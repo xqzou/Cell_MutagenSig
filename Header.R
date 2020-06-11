@@ -245,7 +245,21 @@ Mutagenicity_ratio <- function(background_profile_set, sig_profile_set){
 #
 #####################################
 gen_muttype_Dinucleotides <- function(CTsubs,SelectCol){
-  muttype_freq_template <- read.table("/nfs/cancer_archive04/xz3/h_mutagen/12_subs/Dinucleiotides/Dinucleotides_template.txt", sep = "\t", header = T, as.is = T)
+  a <- c("AA>CC","AA>CG","AA>CT","AA>GC","AA>GG","AA>GT","AA>TC","AA>TG","AA>TT",
+         "AC>CA","AC>CG","AC>CT","AC>GA","AC>GG","AC>GT","AC>TA","AC>TG","AC>TT",
+         "AG>CA","AG>CC","AG>CT","AG>GA","AG>GC","AG>GT","AG>TA","AG>TC","AG>TT",
+         "AT>CA","AT>CC","AT>CG","AT>GA","AT>GC","AT>TA",
+         "CA>AC","CA>AG","CA>AT","CA>GC","CA>GG","CA>GT","CA>TC","CA>TG","CA>TT",
+         "CC>AA","CC>AG","CC>AT","CC>GA","CC>GG","CC>GT","CC>TA","CC>TG","CC>TT",
+         "CG>AA","CG>AC","CG>AT","CG>GA","CG>GC","CG>TA",
+         "GA>AC","GA>AG","GA>AT","GA>CC","GA>CG","GA>CT","GA>TC","GA>TG","GA>TT",
+         "GC>AA","GC>AG","GC>AT","GC>CA","GC>CG","GC>TA",
+         "TA>AC","TA>AG","TA>AT","TA>CC","TA>CG","TA>GC")
+  
+  muttype_freq_template <- data.frame("MutationType"=a)
+  muttype_freq_template$Ref <- substr(muttype_freq_template$MutationType,1,2)
+  
+  CTsubs$dinuc_mutation_final <- ifelse(CTsubs$dinuc_mutation%in%a,CTsubs$dinuc_mutation,CTsubs$dinuc_mutation_rc)
   
   sigfile_freq <- data.frame(table(CTsubs[,SelectCol],CTsubs$dinuc_mutation_final))
   names(sigfile_freq) <- c("SelectPara","MutationType","Freq")

@@ -1,5 +1,5 @@
 # Cell_MutagenSig
-Codes to regenerate figures for mutagen paper
+Code to regenerate figures for mutagen paper
 
 Run R in /Cell_MutagenSig/
 source("Figure2_MutationSummary.R")
